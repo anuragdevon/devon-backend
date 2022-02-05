@@ -1,5 +1,6 @@
 package main
 
+// Imports
 import (
   "fmt"
   "strings"
@@ -7,6 +8,7 @@ import (
   "io/ioutil"
 )
 
+// Driver Code
 func main() {
 
   url := "http://127.0.0.1:8000/"
@@ -15,7 +17,7 @@ func main() {
   payload := strings.NewReader(`{
     "email": "newemail@gmail.com", 
     "message": "mashiro"
-}`)
+  }`)
 
   client := &http.Client {
   }
