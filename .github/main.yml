@@ -1,0 +1,45 @@
+name: devon-bakend-heroku CD
+
+# Basic OPs
+on:
+  push:
+    branches:
+      - main
+  pull_requests:
+    branches:
+      - main
+
+# Environement variables setup
+env:
+  HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }}
+  HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+
+# Setup jobs
+jobs:
+  deploy:
+    name: Deploy to Heroku
+    runs-on: ubuntu-latest
+    steps:
+    
+      # Clone the repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Build Docker Image
+      - name: Docker Build
+        run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+
+      # Push the docker image to container registry
+      - name: Publish
+        run: |
+          heroku container:push web --app $HEROKU_APP_NAME
+          heroku container:release web --app $HEROKU_APP_NAME
+
+
+      # - name: Push Docker Image
+      #   uses: actions/docker-build@v2
+      #   with:
+      #     dockerfile: Dockerfile
+      #     push: true
+      #     image: registry.heroku.com/$HEROKU_APP_NAME/web
+
