@@ -1,23 +1,27 @@
-FROM golang:1.17-buster
-
-# Setup basic dvel
-RUN apt-get update
+# Build Phase------------------------------------------------
+FROM golang:1.13.8-alpine3.11 as build 
 
 # Setup working dir
-RUN mkdir -p /backend
-WORKDIR /backend
+RUN mkdir -p /devon-backend
+WORKDIR /devon-backend
 
 # Copy and add files to workdir
-ADD contact /backend/contact/
-COPY main.go /backend/
-COPY go.sum /backend/
-COPY go.mod /backend/
-COPY .env /backend/
+ADD contact /devon-backend/contact/
+COPY main.go /devon-backend/
+COPY go.sum /devon-backend/
+COPY go.mod /devon-backend/
+COPY .env /devon-backend/
+
+# Build init
+RUN CGO_ENABLED=0 go build -o /devon-backend/
+
+# Image Serve Phase-------------------------------------------
+FROM alpine:3.14
+
+COPY --from=build /devon-backend /devon-backend
 
 # Expose Ports
 EXPOSE 8080
 
-CMD go run /backend/main.go | tee backen.log
-# DOCKER_BUILDKIT=1 docker build .
-# docker build -t auth:1 . 
-# DOCKER_BUILDKIT=1 docker build -t auth:1 .
+# Start Server
+CMD cd devon-backend && ./main | tee devon-backend.log

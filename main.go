@@ -1,7 +1,7 @@
 package main
 
 import (
-  contact "./contact"
+  contact "devon-backend/main/contact"
 	"github.com/joho/godotenv"
   "log"
   "os"
@@ -15,6 +15,6 @@ func main() {
     log.Fatal("[Error loading .env file]: ", err)
     os.Exit(1)
   }
-  log.Println("server started at :8000")
+  log.Println("server started at :8080")
   contact.HandleRequests()
 }

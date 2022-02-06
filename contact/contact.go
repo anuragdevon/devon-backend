@@ -73,7 +73,7 @@ func createMessage(email string, message string, to string, subject string) stri
   
 func HandleRequests() {
 	http.HandleFunc("/", processor)
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
   // Contact Process Functions END--------------------------------------------
   

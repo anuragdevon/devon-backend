@@ -1,4 +1,4 @@
-module devon-backend/m
+module devon-backend/main
 
 go 1.17
 
