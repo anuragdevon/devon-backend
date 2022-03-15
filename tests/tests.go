@@ -11,12 +11,13 @@ import (
 // Driver Code
 func main() {
 
-  url := "http://127.0.0.1:8080/"
+  url := "https://devon-backend.herokuapp.com:8080/"
+  // url := "http://127.0.0.1:8080/"
   method := "POST"
 
   payload := strings.NewReader(`{
     "email": "newemail@gmail.com", 
-    "message": "mashiro"
+    "message": "MASHIRO..."
   }`)
 
   client := &http.Client {
